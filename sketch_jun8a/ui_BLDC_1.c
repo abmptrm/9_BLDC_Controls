@@ -121,7 +121,7 @@ void ui_BLDC_1_screen_init(void)
     lv_obj_set_style_text_font(ui_Label24, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Dropdown1 = lv_dropdown_create(ui_BLDC_1);
-    lv_dropdown_set_options(ui_Dropdown1, "OFF\nON\n");
+    lv_dropdown_set_options(ui_Dropdown1, "OFF\nON");
     lv_dropdown_set_selected_highlight(ui_Dropdown1, false);
     lv_obj_set_width(ui_Dropdown1, 226);
     lv_obj_set_height(ui_Dropdown1, LV_SIZE_CONTENT);    /// 1
@@ -133,6 +133,5 @@ void ui_BLDC_1_screen_init(void)
 
 
     lv_obj_add_event_cb(ui_Button10, ui_event_Button10, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_Dropdown1, ui_event_Dropdown1, LV_EVENT_ALL, NULL);
 
 }

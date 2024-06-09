@@ -87,7 +87,6 @@ extern lv_obj_t * ui_Button11;
 extern lv_obj_t * ui_Label23;
 extern lv_obj_t * ui_Button12;
 extern lv_obj_t * ui_Label24;
-void ui_event_Dropdown1(lv_event_t * e);
 extern lv_obj_t * ui_Dropdown1;
 // SCREEN: ui_BLDC_2
 void ui_BLDC_2_screen_init(void);

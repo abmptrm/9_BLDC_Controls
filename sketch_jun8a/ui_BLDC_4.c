@@ -121,7 +121,7 @@ void ui_BLDC_4_screen_init(void)
     lv_obj_set_style_text_font(ui_Label39, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Dropdown4 = lv_dropdown_create(ui_BLDC_4);
-    lv_dropdown_set_options(ui_Dropdown4, "OFF\nON\n");
+    lv_dropdown_set_options(ui_Dropdown4, "OFF\nON");
     lv_dropdown_set_selected_highlight(ui_Dropdown4, false);
     lv_obj_set_width(ui_Dropdown4, 226);
     lv_obj_set_height(ui_Dropdown4, LV_SIZE_CONTENT);    /// 1
