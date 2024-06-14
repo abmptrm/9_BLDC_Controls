@@ -1,5 +1,8 @@
 #include <TFT_eSPI.h>
-#include <EEPROM.h>
+
+// #include <EEPROM.h>
+// #include <AT24C256.h>
+// AT24C256 eeprom(0x50, &Wire);
 
 #include <lvgl.h>
 #include "ui.h"
@@ -7,7 +10,11 @@
 #include <Wire.h>
 #include <BMP180.h>
 
-#define EEPROM_SIZE 512
+// #include <Adafruit_AHT10.h>
+
+// Adafruit_AHT10 aht;
+
+// Adafruit_Sensor *aht_humidity, *aht_temp;
 
 #define BLDC_1 0
 #define BLDC_2 1
@@ -23,15 +30,6 @@ uint16_t calData[5] = { 353, 3568, 269, 3491, 7};
 static const uint16_t screenWidth  = 480;
 static const uint16_t screenHeight = 320;
 
-int state;
-int readData;
-// const char* value = "OFF";
-
-lv_obj_t * ui_Label12;
-lv_obj_t * ui_Label19;
-
-lv_obj_t * ui_Label47;
-
 /*
 BMP180(resolution)
 
@@ -43,6 +41,9 @@ BMP180_ULTRAHIGHRES  - pressure oversampled 8 times & power consumption 12μA, l
 */
 
 BMP180 myBMP(BMP180_ULTRAHIGHRES);
+
+lv_obj_t * ui_LabelPress;
+lv_obj_t * ui_LabelTemp;
 
 TFT_eSPI lcd = TFT_eSPI(); /* TFT entity */
 
@@ -64,6 +65,7 @@ void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *colo
 }
 
 uint16_t touchX, touchY;
+
 /*touch read*/
 void my_touchpad_read( lv_indev_drv_t * indev_driver, lv_indev_data_t * data )
 {
@@ -89,23 +91,20 @@ void my_touchpad_read( lv_indev_drv_t * indev_driver, lv_indev_data_t * data )
   }
 }
 
+///////////////// SETUP FUNCTIONS //////////////////
+
 void setup()
 {
   Serial.begin( 115200 ); /*serial init */
 
-  EEPROM.begin(EEPROM_SIZE);
+  // EEPROM.begin(EEPROM_SIZE);
+  // eeprom.begin();
   
   //LCD init
   lcd.begin();          
   lcd.setRotation(1); 
-  // lcd.fillScreen(TFT_BLACK);
   lcd.setTouch(calData);
   delay(100);
-  //background light pin
-  // pinMode(led, OUTPUT);
-  // digitalWrite(27, HIGH);
-
-
 
   //lvgl init
   lv_init();
@@ -129,8 +128,6 @@ void setup()
   indev_drv.read_cb = my_touchpad_read;
   lv_indev_drv_register( &indev_drv );
 
-  // lcd.fillScreen(TFT_BLACK);
-
   //lv_demo_widgets();    // LVGL demo
   ui_init();
 
@@ -142,53 +139,43 @@ void setup()
   
   // Serial.println(F("Bosch BMP180/BMP085 sensor is OK")); //(F()) saves string to flash & keeps dynamic memory free
 
+  // if (!aht.begin()) {
+  //   Serial.println("Failed to find AHT10 chip");
+  //   while (1) {
+  //     delay(10);
+  //   }
+  // }
+
+  // Serial.println("AHT10 Found!");
+  // // aht_temp = aht.getTemperatureSensor();
+  // // aht_temp->printSensorDetails();
+
   
 
   Serial.println( "Setup done" );
 }
 
-// SCREEN BLDC 1 ======================================================================
-
-void ui_event_Checkbox2(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        if(lv_obj_has_state(target, LV_STATE_CHECKED)) {
-            state = 1;
-        } else {
-            state = 0;
-        }
-
-        // Write the state to EEPROM
-        EEPROM.write(0, state);
-        EEPROM.commit();
-
-        // Read back the state from EEPROM
-        
-        readData = EEPROM.read(0);
-
-        // Update the label based on the state
-        if (readData == 1) {
-            lv_label_set_text(ui_Label47, "ON");
-        } else if (readData == 0) {
-            lv_label_set_text(ui_Label47, "OFF");
-        }
-
-        // Debug output to Serial Monitor
-        Serial.print("Value: ");
-        Serial.println(readData);
-    }
-    
-    
-}
-
-
+////////////////////// LOOP FUNCTIONS //////////////////
 
 void loop()
 {
-  // lv_label_set_text(ui_Label12, myBMP.getTemperature());
+  
+  
   // lv_label_set_text(ui_Label19, myBMP.getPressure());
+
   lv_timer_handler();
   delay(5);
+
+  // sensors_event_t temp, humidity;
+  // aht.getEvent(&humidity, &temp);
+  // Serial.print("\t\tTemperature ");
+  // Serial.print(temp.temperature);
+  // // sensors_event_t humidity, temp;
+  // // aht.getEvent(&humidity, &temp);
+  // int cs_temp = (int)temp.temperature;
+  // char my_temp[10];
+  // sprintf(my_temp, "%d", cs_temp);
+  // lv_label_set_text(ui_LabelTemp, my_temp);
 }
+
+
