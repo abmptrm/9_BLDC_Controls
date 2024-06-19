@@ -317,14 +317,14 @@ void ui_event_ButtonKembali(lv_event_t * e)
         _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_NONE, 20, 0, &ui_MainScreen_screen_init);
     }
 }
-void ui_event_ArcSpeed1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_RELEASED) {
-        _ui_arc_set_text_value(ui_LabelSpeed1, target, "", "");
-    }
-}
+// void ui_event_ArcSpeed1(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_RELEASED) {
+//         _ui_arc_set_text_value(ui_LabelSpeed1, target, "", "");
+//     }
+// }
 void ui_event_LabelSpeed1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);

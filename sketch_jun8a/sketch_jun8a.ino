@@ -4,17 +4,30 @@
 // #include <AT24C256.h>
 // AT24C256 eeprom(0x50, &Wire);
 
+#include <Wire.h>
+#define EEPROM_I2C_ADDRESS_0 0x50
+int EEPROM_I2C_ADDRESS = 0x50;
+int i=0;
+
 #include <lvgl.h>
 #include "ui.h"
 
 #include <Wire.h>
 #include <BMP180.h>
 
-// #include <Adafruit_AHT10.h>
+#include <Adafruit_AHT10.h>
 
-// Adafruit_AHT10 aht;
+Adafruit_AHT10 aht;
 
-// Adafruit_Sensor *aht_humidity, *aht_temp;
+Adafruit_Sensor *aht_humidity, *aht_temp;
+
+#include <ESP32Servo.h>
+
+Servo bldc1; 
+int speed = 0; 
+
+const int bldcPin_1 = 4;
+int ADC_Max = 4096; 
 
 #define BLDC_1 0
 #define BLDC_2 1
@@ -49,6 +62,25 @@ TFT_eSPI lcd = TFT_eSPI(); /* TFT entity */
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[ screenWidth * screenHeight / 13 ];
+
+void update_motor_speed(int speed){   
+  bldc1.write(speed);     
+}
+
+void ui_event_ArcSpeed1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+      _ui_arc_set_text_value(ui_LabelSpeed1, target, "", "");
+      int speed = lv_arc_get_value(target);
+      Serial.print("Speed");
+      Serial.println(speed);
+      int val = map(speed, 180, 0, 255, 0);
+      update_motor_speed(val);
+    }
+}
+
 
 
 void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p )
@@ -91,11 +123,39 @@ void my_touchpad_read( lv_indev_drv_t * indev_driver, lv_indev_data_t * data )
   }
 }
 
+
+
+
 ///////////////// SETUP FUNCTIONS //////////////////
 
 void setup()
 {
   Serial.begin( 115200 ); /*serial init */
+  Wire.begin();
+
+  // if (myBMP.begin() != true)
+  // {
+  //   Serial.println(F("Bosch BMP180/BMP085 is not connected or fail to read calibration coefficients"));
+  //   delay(2000);
+  // }
+
+  if (!aht.begin()) {
+    Serial.println("Failed to find AHT10 chip");
+    while (1) {
+      delay(10);
+    }
+  }
+
+  Serial.println("AHT10 Found!");
+  aht_temp = aht.getTemperatureSensor();
+  aht_temp->printSensorDetails();
+
+  // ESP32PWM::allocateTimer(0);
+	// ESP32PWM::allocateTimer(1);
+	// ESP32PWM::allocateTimer(2);
+	// ESP32PWM::allocateTimer(3);
+	// bldc1.setPeriodHertz(50);    // standard 50 hz servo
+	// bldc1.attach(bldcPin_1, 1000, 2000);
 
   // EEPROM.begin(EEPROM_SIZE);
   // eeprom.begin();
@@ -131,51 +191,102 @@ void setup()
   //lv_demo_widgets();    // LVGL demo
   ui_init();
 
-  // while (myBMP.begin() != true)
-  // {
-  //   Serial.println(F("Bosch BMP180/BMP085 is not connected or fail to read calibration coefficients"));
-  //   delay(5000);
-  // }
+  
   
   // Serial.println(F("Bosch BMP180/BMP085 sensor is OK")); //(F()) saves string to flash & keeps dynamic memory free
 
-  // if (!aht.begin()) {
-  //   Serial.println("Failed to find AHT10 chip");
-  //   while (1) {
-  //     delay(10);
-  //   }
-  // }
 
-  // Serial.println("AHT10 Found!");
-  // // aht_temp = aht.getTemperatureSensor();
-  // // aht_temp->printSensorDetails();
+  // READ TEMPERATUR INTO EEPROM 
+  int val_temp = readAT24(0);
 
-  
+  if (val_temp > 0){
+    char my_temp[10];
+    sprintf(my_temp, "%d", val_temp);
+    _ui_label_set_property(ui_LabelTemp, _UI_LABEL_PROPERTY_TEXT, my_temp);
+  }
 
-  Serial.println( "Setup done" );
+  // Serial.println( "Setup done" );
+
 }
 
 ////////////////////// LOOP FUNCTIONS //////////////////
 
 void loop()
 {
+  lv_task_handler();
+
+  // WRITE TEMP INTO EEPROM
+  sensors_event_t temp, humidity;
+  aht.getEvent(&humidity, &temp);
+  Serial.print("Temperature ");
+  Serial.println(temp.temperature);
+  int cs_temp = (int)temp.temperature;
+
+  writeAT24(0, cs_temp);
+
+  char my_temp[10];
+  sprintf(my_temp, "%d", cs_temp);
+  _ui_label_set_property(ui_LabelTemp, _UI_LABEL_PROPERTY_TEXT, my_temp);
+
+  /////////////////////////////////////
+
+  // // Serial.print(F("Temperature.......: ")); Serial.print(myBMP.getTemperature(), 1); Serial.println(F(" +-1.0C"));
+  // Serial.print(F("Pressure..........: ")); Serial.print(myBMP.getPressure());       Serial.println(F(" +-100Pa"));
+
+  // int cs_press = (int)myBMP.getPressure();
+  // char my_press[10];
+  // sprintf(my_press, "%d", cs_press);
+  // _ui_label_set_property(ui_LabelPress, _UI_LABEL_PROPERTY_TEXT, my_press);
+
+  
+
+  delay(2);
+  
   
   
   // lv_label_set_text(ui_Label19, myBMP.getPressure());
 
-  lv_timer_handler();
-  delay(5);
+  
 
-  // sensors_event_t temp, humidity;
-  // aht.getEvent(&humidity, &temp);
-  // Serial.print("\t\tTemperature ");
-  // Serial.print(temp.temperature);
-  // // sensors_event_t humidity, temp;
-  // // aht.getEvent(&humidity, &temp);
-  // int cs_temp = (int)temp.temperature;
-  // char my_temp[10];
-  // sprintf(my_temp, "%d", cs_temp);
-  // lv_label_set_text(ui_LabelTemp, my_temp);
+  // lv_label_set_text(, );
 }
+
+
+// Function to write to EEPROOM
+void writeAT24(int dataAddress, int dataVal)
+{
+  Wire.beginTransmission(EEPROM_I2C_ADDRESS);
+
+  Wire.write((int)(dataAddress >> 8));   // MSB
+  Wire.write((int)(dataAddress & 0xFF)); // LSB
+  Wire.write(dataVal);
+  Wire.endTransmission();
+
+  delay(5);
+}
+
+// Function to read from EEPROM
+byte readAT24(int dataAddress)
+{
+  byte readData = 0;
+  Wire.beginTransmission(EEPROM_I2C_ADDRESS);
+  Wire.write((int)(dataAddress >> 8));   // MSB
+  Wire.write((int)(dataAddress & 0xFF)); // LSB
+  Wire.endTransmission();
+
+  delay(5);
+  Wire.requestFrom(EEPROM_I2C_ADDRESS, 1);
+  //delay(1);
+
+  if(Wire.available())
+  {
+    readData =  Wire.read();
+  }
+
+  return readData;
+}
+
+
+
 
 

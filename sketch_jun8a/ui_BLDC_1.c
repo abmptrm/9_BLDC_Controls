@@ -70,7 +70,8 @@ void ui_BLDC_1_screen_init(void)
     lv_obj_set_x(ui_ArcSpeed1, -84);
     lv_obj_set_y(ui_ArcSpeed1, 30);
     lv_obj_set_align(ui_ArcSpeed1, LV_ALIGN_CENTER);
-    lv_arc_set_value(ui_ArcSpeed1, 10);
+    lv_arc_set_value(ui_ArcSpeed1, 0);
+    uint16_t value_Arc = lv_arc_get_value(ui_ArcSpeed1);
 
 
     ui_LabelSpeed1 = lv_label_create(ui_BLDC_1);
@@ -79,7 +80,7 @@ void ui_BLDC_1_screen_init(void)
     lv_obj_set_x(ui_LabelSpeed1, -86);
     lv_obj_set_y(ui_LabelSpeed1, 28);
     lv_obj_set_align(ui_LabelSpeed1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_LabelSpeed1, "0");
+    lv_label_set_text(ui_LabelSpeed1, value_Arc);
     lv_obj_set_style_text_color(ui_LabelSpeed1, lv_color_hex(0xFAFAFA), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSpeed1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_LabelSpeed1, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
