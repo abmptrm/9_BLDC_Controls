@@ -8,6 +8,7 @@ SET(SOURCES ui_MainScreen.c
     ui_BLDC_7.c
     ui_BLDC_8.c
     ui_BLDC_9.c
+    ui_WIFI_Screen.c
     ui.c
     ui_comp_hook.c
     ui_helpers.c
@@ -15,6 +16,10 @@ SET(SOURCES ui_MainScreen.c
     ui_img_1754639307.c
     ui_img_1924603646.c
     ui_img_112426812.c
-    ui_img_1318045025.c)
+    ui_img_1318045025.c
+    ui_img_475571255.c
+    ui_img_1377203910.c
+    ui_img_777776686.c
+    ui_img_1782230515.c)
 
 add_library(ui ${SOURCES})
