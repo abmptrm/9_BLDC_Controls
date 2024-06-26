@@ -47,46 +47,90 @@ BMP180_ULTRAHIGHRES  - pressure oversampled 8 times & power consumption 12μA, l
 
 lv_obj_t * ui_LabelPress;
 lv_obj_t * ui_LabelTemp;
+lv_obj_t * ui_ContainerMsgBox;
 
 TFT_eSPI lcd = TFT_eSPI(); /* TFT entity */
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[ screenWidth * screenHeight / 13 ];
 
-// void update_motor_speed(int slider_value){   
-//   int speed = map(slider_value, 0, 100, 97, 120);
-//   bldc1.write(speed);     
+int state;
+int stateWise;
+int clockwise = 1;
+
+void update_motor_speed(int slider_value){ 
+  int speed;
+  if (stateWise == 1) {
+    speed = map(slider_value, 0, 100, 97, 120);
+  } 
+
+  if (stateWise == 0) {
+    speed = map(slider_value, 0, 100, 90, 73);
+  }  
+  bldc1.write(speed);        
+}
+
+
+// Screen bldc1
+// void ui_event_SliderSpeed1(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+
+//     int16_t slider_value = lv_slider_get_value(target);
+
+
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed1, target, "", "");
+//         int state_speed = state;
+//         update_motor_speed(slider_value);
+//     }
 // }
 
-void ui_event_SliderSpeed1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
+// void ui_event_CheckboxState10(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
 
-    int16_t slider_value = lv_slider_get_value(target);
+//     if(event_code == lv_obj_has_state(target, LV_STATE_CHECKED)) {
+//       clockwise = 1;
+//     }
+//     if(event_code == !lv_obj_has_state(target, LV_STATE_CHECKED)) {
+//       clockwise = 0;
+//     }
 
+//     Serial.print("clock: ");
+//     Serial.println(clockwise);
+//     stateWise = clockwise;
+// }
 
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed1, target, "", "");
-        int speed = map(slider_value, 0, 100, 97, 120);
-        // update_motor_speed(speed);
-        bldc1.write(speed);     
-    }
-}
+// void ui_event_CheckboxState1(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target, LV_STATE_CHECKED)) {
+//         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "ON");
+//     }
+//     if(event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target, LV_STATE_CHECKED)) {
+//         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
+//     }
+// }
 
-void ui_event_SliderSpeed2(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
+// //screen bldc 2
 
-    int16_t slider_value = lv_slider_get_value(target);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed2, target, "", "");
-        int speed = map(slider_value, 0, 100, 97, 120);
-        // update_motor_speed(speed);
-        bldc2.write(speed); 
-    }
-}
+// void ui_event_SliderSpeed2(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+
+//     int16_t slider_value = lv_slider_get_value(target);
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed2, target, "", "");
+//         int speed = map(slider_value, 0, 100, 97, 120);
+//         // update_motor_speed(speed);
+//         bldc2.write(speed); 
+//     }
+// }
 
 void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p )
 {
@@ -160,8 +204,6 @@ void init_lcd(){
   //lv_demo_widgets();    // LVGL demo
   ui_init();
 }
-
-
 
 
 ///////////////// SETUP FUNCTIONS //////////////////
