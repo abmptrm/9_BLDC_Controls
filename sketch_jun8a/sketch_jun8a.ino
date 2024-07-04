@@ -1,33 +1,29 @@
 #include <TFT_eSPI.h>
-
-// #include <Wire.h>
-// #define EEPROM_I2C_ADDRESS_0 0x50
-// int EEPROM_I2C_ADDRESS = 0x50;
-// int i=0;
-
-#include "EEPROM_AT24CXX.h"
-EEPROM_AT24CXX eeprom_data;
-
-
-
 #include <lvgl.h>
 #include "ui.h"
-
-// #include <Wire.h>
-#include <BMP180.h>
-
 #include <Arduino.h>
 #include <ESP32Servo.h>
-
-Servo bldc1, bldc2;
-int bldcPin1 = 4;
-int bldcPin2 = 2;
-
+#include "ExEEPROM.h"
 #include <Adafruit_AHT10.h>
+#include <BMP180.h>
+#include "XBMP10.h"
+#include "AHT10.h"
+#include "ADDR.h"
+#include <Wire.h>
 
-Adafruit_AHT10 aht;
+ExEEPROM data;
+XBMP10 bmp10;
+AHT10 aht10;
+// Adafruit_AHT10 aht;
+// Adafruit_Sensor *aht_humidity, *aht_temp;
+// BMP180 myBMP(BMP180_ULTRAHIGHRES);
 
-Adafruit_Sensor *aht_humidity, *aht_temp;
+// Servo bldc1, bldc2;
+// int bldcPin1 = 4;
+// int bldcPin2 = 2;
+
+// #include <Adafruit_AHT10.h>
+
 
 uint16_t calData[5] = { 353, 3568, 269, 3491, 7};
 static const uint16_t screenWidth  = 480;
@@ -43,32 +39,29 @@ BMP180_HIGHRES       - pressure oversampled 4 times & power consumption 7μA
 BMP180_ULTRAHIGHRES  - pressure oversampled 8 times & power consumption 12μA, library default
 */
 
-// BMP180 myBMP(BMP180_ULTRAHIGHRES);
 
-lv_obj_t * ui_LabelPress;
-lv_obj_t * ui_LabelTemp;
-lv_obj_t * ui_ContainerMsgBox;
+// lv_obj_t * ui_LabelPress;
+// lv_obj_t * ui_LabelTemp;
+// lv_obj_t * ui_ContainerMsgBox;
 
 TFT_eSPI lcd = TFT_eSPI(); /* TFT entity */
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf1[ screenWidth * screenHeight / 13 ];
 
-int state;
-int stateWise;
-int clockwise = 1;
 
-void update_motor_speed(int slider_value){ 
-  int speed;
-  if (stateWise == 1) {
-    speed = map(slider_value, 0, 100, 97, 120);
-  } 
 
-  if (stateWise == 0) {
-    speed = map(slider_value, 0, 100, 90, 73);
-  }  
-  bldc1.write(speed);        
-}
+// void update_motor_speed(int slider_value){ 
+//   int speed;
+//   if (stateWise == 1) {
+//     speed = map(slider_value, 0, 100, 97, 120);
+//   } 
+
+//   if (stateWise == 0) {
+//     speed = map(slider_value, 0, 100, 90, 73);
+//   }  
+//   bldc1.write(speed);        
+// }
 
 
 // Screen bldc1
@@ -211,53 +204,32 @@ void init_lcd(){
 void setup()
 {
   Serial.begin( 115200 ); /*serial init */
-  eeprom_data.initEEPROM_AT24CXX();
+  Wire.begin();
 
-  ESP32PWM::allocateTimer(0);
-	ESP32PWM::allocateTimer(1);
-	ESP32PWM::allocateTimer(2);
-	ESP32PWM::allocateTimer(3);
-  bldc1.setPeriodHertz(50);// Standard 50hz servo
-  bldc2.setPeriodHertz(50);// Standard 50hz servo
+  // ESP32PWM::allocateTimer(0);
+	// ESP32PWM::allocateTimer(1);
+	// ESP32PWM::allocateTimer(2);
+	// ESP32PWM::allocateTimer(3);
+  // bldc1.setPeriodHertz(50);// Standard 50hz servo
+  // bldc2.setPeriodHertz(50);// Standard 50hz servo
 
-  bldc1.attach(bldcPin1, 1000, 2000);
-  bldc2.attach(bldcPin2, 1000, 2000);
-
+  // bldc1.attach(bldcPin1, 1000, 2000);
+  // bldc2.attach(bldcPin2, 1000, 2000);
   // ESC.attach(signalOut,minPWM,maxPWM);
+
+  data.init();
+  bmp10.init();
+  aht10.init();
+  
 
   init_lcd();
 
-  // if (myBMP.begin() != true)
-  // {
-  //   Serial.println(F("Bosch BMP180/BMP085 is not connected or fail to read calibration coefficients"));
-  //   delay(2000);
-  // }
-
-  // if (!aht.begin()) {
-  //   Serial.println("Failed to find AHT10 chip");
-  //   while (1) {
-  //     delay(10);
-  //   }
-  // }
-
-  // Serial.println("AHT10 Found!");
-  // aht_temp = aht.getTemperatureSensor();
-  // aht_temp->printSensorDetails();
-
-  // EEPROM.begin(EEPROM_SIZE);
-  // eeprom.begin();
-
-  // Serial.println(F("Bosch BMP180/BMP085 sensor is OK")); //(F()) saves string to flash & keeps dynamic memory free
-
-  // READ TEMPERATUR INTO EEPROM 
-  // int val_temp = readAT24(0);
-
-  // if (val_temp > 0){
-  //   char my_temp[10];
-  //   sprintf(my_temp, "%d", val_temp);
-  //   _ui_label_set_property(ui_LabelTemp, _UI_LABEL_PROPERTY_TEXT, my_temp);
-  // }
-
+  int read_temp = data.read(ADDR_TEMP);
+  aht10.read_temp(read_temp);
+  int read_press = data.read(ADDR_PRESS);
+  bmp10.read_press(read_press);
+  
+  
   // Serial.println( "Setup done" );
 
 }
@@ -267,79 +239,10 @@ void setup()
 void loop()
 {
   lv_task_handler();
-
-  // WRITE TEMP INTO EEPROM
-  // sensors_event_t temp, humidity;
-  // aht.getEvent(&humidity, &temp);
-  // Serial.print("Temperature ");
-  // Serial.println(temp.temperature);
-  // int cs_temp = (int)temp.temperature;
-
-  // writeAT24(0, cs_temp);
-
-  // char my_temp[10];
-  // sprintf(my_temp, "%d", cs_temp);
-  // _ui_label_set_property(ui_LabelTemp, _UI_LABEL_PROPERTY_TEXT, my_temp);
-
-  /////////////////////////////////////
-
-  // // Serial.print(F("Temperature.......: ")); Serial.print(myBMP.getTemperature(), 1); Serial.println(F(" +-1.0C"));
-  // Serial.print(F("Pressure..........: ")); Serial.print(myBMP.getPressure());       Serial.println(F(" +-100Pa"));
-
-  // int cs_press = (int)myBMP.getPressure();
-  // char my_press[10];
-  // sprintf(my_press, "%d", cs_press);
-  // _ui_label_set_property(ui_LabelPress, _UI_LABEL_PROPERTY_TEXT, my_press);
-
-  
-
+  int val_temp = aht10.write_temp();
+  data.write(ADDR_TEMP, val_temp);
+  int val_press = bmp10.write_press();
+  data.write(ADDR_PRESS, val_press);
   delay(2);
-  
-  
-  
-  // lv_label_set_text(ui_Label19, myBMP.getPressure());
-
-  
-
-  // lv_label_set_text(, );
+  // delay(5);
 }
-
-
-// Function to write to EEPROOM
-// void writeAT24(int dataAddress, int dataVal)
-// {
-//   Wire.beginTransmission(EEPROM_I2C_ADDRESS);
-
-//   Wire.write((int)(dataAddress >> 8));   // MSB
-//   Wire.write((int)(dataAddress & 0xFF)); // LSB
-//   Wire.write(dataVal);
-//   Wire.endTransmission();
-
-//   delay(5);
-// }
-
-// // Function to read from EEPROM
-// byte readAT24(int dataAddress)
-// {
-//   byte readData = 0;
-//   Wire.beginTransmission(EEPROM_I2C_ADDRESS);
-//   Wire.write((int)(dataAddress >> 8));   // MSB
-//   Wire.write((int)(dataAddress & 0xFF)); // LSB
-//   Wire.endTransmission();
-
-//   delay(5);
-//   Wire.requestFrom(EEPROM_I2C_ADDRESS, 1);
-//   //delay(1);
-
-//   if(Wire.available())
-//   {
-//     readData =  Wire.read();
-//   }
-
-//   return readData;
-// }
-
-
-
-
-

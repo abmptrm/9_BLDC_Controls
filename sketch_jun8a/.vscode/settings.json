@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "eeprom_at24cxx.h": "c",
+        "aht10_sensor.h": "c"
+    }
+}
