@@ -4,7 +4,6 @@
 #include <lvgl.h>
 #include "ui.h"
 
-
 lv_obj_t *ui_LabelTemp;
 Adafruit_AHT10 aht;
 Adafruit_Sensor *aht_temp;

@@ -6,7 +6,6 @@
 #include "ui.h"
 
 lv_obj_t *ui_LabelPress;
- 
 
 BMP180 myBMP(BMP180_ULTRAHIGHRES);
 

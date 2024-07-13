@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "eeprom_at24cxx.h": "c",
-        "aht10_sensor.h": "c"
+        "aht10_sensor.h": "c",
+        "xmemory": "cpp",
+        "bldc9.h": "c"
     }
 }
