@@ -5,6 +5,7 @@
 
 #include "ui.h"
 #include "ui_helpers.h"
+
 ///////////////////// VARIABLES ////////////////////
 
 
@@ -489,7 +490,6 @@ void ui_event_Button1(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_RELEASED) {
         _ui_screen_change(&ui_BLDC_1, LV_SCR_LOAD_ANIM_NONE, 20, 0, &ui_BLDC_1_screen_init);
-        
     }
 }
 void ui_event_Button2(lv_event_t * e)
@@ -599,7 +599,6 @@ void ui_event_CheckboxState1(lv_event_t * e)
         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
     }
 }
-
 // void ui_event_SliderSpeed1(lv_event_t * e)
 // {
 //     lv_event_code_t event_code = lv_event_get_code(e);
@@ -621,10 +620,12 @@ void ui_event_CheckboxState1(lv_event_t * e)
 //     lv_event_code_t event_code = lv_event_get_code(e);
 //     lv_obj_t * target = lv_event_get_target(e);
 //     if(event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target, LV_STATE_CHECKED)) {
-//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF");
+//         _ui_label_set_property(ui_BLDC1, _UI_LABEL_PROPERTY_TEXT, "ON");
+//     }
+//     if(event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target, LV_STATE_CHECKED)) {
+//         _ui_label_set_property(ui_BLDC1, _UI_LABEL_PROPERTY_TEXT, "OFF");
 //     }
 // }
-
 void ui_event_ButtonSimpan(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -633,8 +634,7 @@ void ui_event_ButtonSimpan(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
-
-// void ui_event_Button14(lv_event_t * e) // Save
+// void ui_event_Button14(lv_event_t * e)
 // {
 //     lv_event_code_t event_code = lv_event_get_code(e);
 //     lv_obj_t * target = lv_event_get_target(e);
@@ -642,7 +642,7 @@ void ui_event_ButtonSimpan(lv_event_t * e)
 //         _ui_flag_modify(ui_ContainerMsgBox, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
 //     }
 // }
-// void ui_event_Button15(lv_event_t * e) // Canc
+// void ui_event_Button15(lv_event_t * e)
 // {
 //     lv_event_code_t event_code = lv_event_get_code(e);
 //     lv_obj_t * target = lv_event_get_target(e);
@@ -718,6 +718,14 @@ void ui_event_ButtonSimpan1(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
+// void ui_event_Button11(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
 // void ui_event_Button12(lv_event_t * e)
 // {
 //     lv_event_code_t event_code = lv_event_get_code(e);
@@ -761,30 +769,30 @@ void ui_event_CheckboxState4(lv_event_t * e)
         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
     }
 }
-void ui_event_SliderSpeed3(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed3, target, "", "");
-    }
-}
-void ui_event_Switch5(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
-    }
-}
-void ui_event_Switch6(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
-    }
-}
+// void ui_event_SliderSpeed3(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed3, target, "", "");
+//     }
+// }
+// void ui_event_Switch5(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
+//     }
+// }
+// void ui_event_Switch6(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
+//     }
+// }
 void ui_event_ButtonSimpan2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -793,22 +801,22 @@ void ui_event_ButtonSimpan2(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
-void ui_event_Button13(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
-void ui_event_Button16(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
+// void ui_event_Button13(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
+// void ui_event_Button16(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
 void ui_event_ButtonKembali3(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -844,30 +852,30 @@ void ui_event_CheckboxState6(lv_event_t * e)
         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
     }
 }
-void ui_event_SliderSpeed4(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed4, target, "", "");
-    }
-}
-void ui_event_Switch7(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
-    }
-}
-void ui_event_Switch8(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
-    }
-}
+// void ui_event_SliderSpeed4(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed4, target, "", "");
+//     }
+// }
+// void ui_event_Switch7(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
+//     }
+// }
+// void ui_event_Switch8(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
+//     }
+// }
 void ui_event_ButtonSimpan3(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -876,22 +884,7 @@ void ui_event_ButtonSimpan3(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox3, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
-void ui_event_Button17(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox3, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
-void ui_event_Button18(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_state_modify(ui_ContainerMsgBox3, LV_STATE_CHECKED, _UI_MODIFY_STATE_ADD);
-    }
-}
+//  
 void ui_event_ButtonKembali4(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -927,30 +920,30 @@ void ui_event_CheckboxState8(lv_event_t * e)
         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
     }
 }
-void ui_event_SliderSpeed5(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed5, target, "", "");
-    }
-}
-void ui_event_Switch9(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
-    }
-}
-void ui_event_Switch10(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
-    }
-}
+// void ui_event_SliderSpeed5(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed5, target, "", "");
+//     }
+// }
+// void ui_event_Switch9(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
+//     }
+// }
+// void ui_event_Switch10(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
+//     }
+// }
 void ui_event_ButtonSimpan4(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -959,22 +952,22 @@ void ui_event_ButtonSimpan4(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox4, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
-void ui_event_Button19(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox4, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
-void ui_event_Button20(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox4, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
+// void ui_event_Button19(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox4, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
+// void ui_event_Button20(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox4, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
 void ui_event_ButtonKembali5(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);

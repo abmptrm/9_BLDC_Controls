@@ -16,7 +16,6 @@ struct data_bldc {
     int direction;
 };
 
-
 void BLDC9::begin(Servo &BLDC, int pin){
     Serial.begin( 115200 ); 
 
@@ -64,13 +63,13 @@ void BLDC9::setOff(Servo &BLDC){
     }  
 
     toggleOnOff = false;
-    lv_label_set_text(ui_LebelState1, "OFF");
+    
     Serial.println("off");
 }
 
 void BLDC9::setOn(Servo &BLDC){
     BLDC.write(speed);
-    lv_label_set_text(ui_LebelState1, "ON");
+    
     toggleOnOff = true;
     Serial.println("on");
 }

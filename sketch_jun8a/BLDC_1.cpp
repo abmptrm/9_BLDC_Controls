@@ -44,9 +44,10 @@ void ui_event_Switch1(lv_event_t * e) // ON/OFF
     lv_obj_t * target = lv_event_get_target(e);
     if(lv_obj_has_state(e->target, LV_STATE_CHECKED)) { 
       myBLDC1.setOn(bldc1);
-
+      lv_label_set_text(ui_LebelState1, "ON");
     } else {
       myBLDC1.setOff(bldc1);
+      lv_label_set_text(ui_LebelState1, "OFF");
     }
 }
 

@@ -252,6 +252,7 @@ void ui_BLDC_2_screen_init(void)
     lv_obj_add_event_cb(ui_Switch3, ui_event_Switch3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Switch4, ui_event_Switch4, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ButtonSimpan1, ui_event_ButtonSimpan1, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button11, ui_event_Button11, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button12, ui_event_Button12, LV_EVENT_ALL, NULL);
 
 }
