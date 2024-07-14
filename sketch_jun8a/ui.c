@@ -5,7 +5,6 @@
 
 #include "ui.h"
 #include "ui_helpers.h"
-
 ///////////////////// VARIABLES ////////////////////
 
 
@@ -137,6 +136,7 @@ lv_obj_t * ui_Label17;
 lv_obj_t * ui_ContainerMsgBox1;
 lv_obj_t * ui_Panel3;
 lv_obj_t * ui_Label18;
+void ui_event_Button11(lv_event_t * e);
 lv_obj_t * ui_Button11;
 void ui_event_Button12(lv_event_t * e);
 lv_obj_t * ui_Button12;
@@ -686,30 +686,30 @@ void ui_event_CheckboxState2(lv_event_t * e)
         _ui_label_set_property(ui_LebelState1, _UI_LABEL_PROPERTY_TEXT, "OFF");
     }
 }
-void ui_event_SliderSpeed2(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_LabelSpeed2, target, "", "");
-    }
-}
-void ui_event_Switch3(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
-    }
-}
-void ui_event_Switch4(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
-    }
-}
+// void ui_event_SliderSpeed2(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_VALUE_CHANGED) {
+//         _ui_slider_set_text_value(ui_LabelSpeed2, target, "", "");
+//     }
+// }
+// void ui_event_Switch3(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT CW/CCW1");
+//     }
+// }
+// void ui_event_Switch4(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_label_set_property(ui_Label1, _UI_LABEL_PROPERTY_TEXT, "INI EDIT ON/OFF1");
+//     }
+// }
 void ui_event_ButtonSimpan1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -718,14 +718,14 @@ void ui_event_ButtonSimpan1(lv_event_t * e)
         _ui_flag_modify(ui_ContainerMsgBox1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
-void ui_event_Button12(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_flag_modify(ui_ContainerMsgBox1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-    }
-}
+// void ui_event_Button12(lv_event_t * e)
+// {
+//     lv_event_code_t event_code = lv_event_get_code(e);
+//     lv_obj_t * target = lv_event_get_target(e);
+//     if(event_code == LV_EVENT_CLICKED) {
+//         _ui_flag_modify(ui_ContainerMsgBox1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+//     }
+// }
 void ui_event_ButtonKembali2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
