@@ -1,5 +1,5 @@
-#ifndef _BLDC_1_H_
-#define _BLDC_1_H_
+#ifndef _BLDC_2_H_
+#define _BLDC_2_H_
 
 #include <lvgl.h>
 #include <ESP32Servo.h>
@@ -9,10 +9,11 @@
 
 // extern int pin[0];
 extern Servo bldc2;
-extern int slider;
-extern int speed;
-extern bool toggleOnOff;
-extern int stateDirection;
+
+// extern int slider[8] = { 0 };
+// extern int speed[8] = { 0 };
+// extern bool toggleOnOff[8] = { false };
+// extern int stateDirection[8] = { 0 };
 
 
 
