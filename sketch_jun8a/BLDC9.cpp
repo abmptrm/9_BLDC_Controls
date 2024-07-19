@@ -21,7 +21,6 @@ void BLDC9::begin(Servo &BLDC, int pin)
 {
   Serial.begin(115200);
 
-  
   BLDC.setPeriodHertz(50);
   BLDC.attach(pin, 1000, 2000);
 
@@ -115,4 +114,4 @@ int BLDC9::getStateDirection(int state, int bldcIndex)
 int BLDC9::setStateDirection(int bldcIndex)
 {
   return stateDirection[bldcIndex];
-} 
+}

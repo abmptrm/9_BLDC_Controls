@@ -25,7 +25,7 @@ void ui_event_Switch7(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
 
-    stateDirection[bldcIndex4] = 1;
+    stateDirection[bldcIndex4] = 0;
 
     if(lv_obj_has_state(e->target, LV_STATE_CHECKED)) {
     // stateDirection = true;

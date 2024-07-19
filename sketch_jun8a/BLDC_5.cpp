@@ -28,11 +28,11 @@ void ui_event_Switch9(lv_event_t * e)
 
     if(lv_obj_has_state(e->target, LV_STATE_CHECKED)) {
     // stateDirection = true;
-        myBLDC5.getStateDirection(1, bldcIndex5);
+        myBLDC5.getStateDirection(0, bldcIndex5);
         Serial.println("1");
     } else {
         // stateDirection = false;
-        myBLDC5.getStateDirection(0, bldcIndex5);
+        myBLDC5.getStateDirection(1, bldcIndex5);
         Serial.println("0");
     }
 }

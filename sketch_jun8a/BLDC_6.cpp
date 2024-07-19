@@ -25,11 +25,11 @@ void ui_event_Switch11(lv_event_t * e)
 
     if(lv_obj_has_state(e->target, LV_STATE_CHECKED)) {
     // stateDirection = true;
-        myBLDC6.getStateDirection(1, bldcIndex6);
+        myBLDC6.getStateDirection(0, bldcIndex6);
         Serial.println("1");
     } else {
         // stateDirection = false;
-        myBLDC6.getStateDirection(0, bldcIndex6);
+        myBLDC6.getStateDirection(1, bldcIndex6);
         Serial.println("0");
     }
 }
@@ -54,7 +54,7 @@ void ui_event_Button21(lv_event_t * e)
     if(event_code == LV_EVENT_CLICKED) {
         _ui_flag_modify(ui_ContainerMsgBox5, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
         BLDC9::data_bldc dataBLDC6 = myBLDC6.getData(speed[bldcIndex6], toggleOnOff[bldcIndex6], stateDirection[bldcIndex6]);
-        myBLDC6.writeBLDC(ADDR_BLDC_2, dataBLDC6);
+        myBLDC6.writeBLDC(ADDR_BLDC_6, dataBLDC6);
         myBLDC6.setSpeed(bldc6, slider[bldcIndex6], bldcIndex6);
         Serial.println("save");
     }

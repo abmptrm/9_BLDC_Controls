@@ -20,8 +20,9 @@ void XBMP10::init(){
 }
 
 
+
 int XBMP10::write_press(){
-    int cs_press = (int)myBMP.getPressure();
+    int cs_press = (int)myBMP.getPressure() / 100;
     char my_press[20];
     sprintf(my_press, "%dPa", cs_press);
     Serial.print("w Pressure: ");
@@ -33,14 +34,15 @@ int XBMP10::write_press(){
 }
 
 int XBMP10::read_press(int val_press){
-    if (val_press > 0){
+    int div_press = val_press / 100;
+    if (div_press > 0 || div_press == 255){
         char my_press[20];
-        sprintf(my_press, "%dPa", val_press);
+        sprintf(my_press, "%dPa", div_press);
         Serial.print("r Pressure: ");
         Serial.println(my_press); 
         // _ui_label_set_property(ui_LabelPress, _UI_LABEL_PROPERTY_TEXT, my_press);
         lv_label_set_text(ui_LabelPress, my_press);
       
     }
-    return val_press;
+    return div_press;
 }

@@ -33,16 +33,16 @@ void ui_event_Switch3(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
 
-    stateDirection[bldcIndex2] = 1;
+    stateDirection[bldcIndex2] = 0;
     
     if(lv_obj_has_state(e->target, LV_STATE_CHECKED)) {
-        myBLDC2.getStateDirection(0, bldcIndex2);
+        myBLDC2.getStateDirection(1, bldcIndex2);
         
     // stateDirection = true; 
         Serial.println("1");
         
     } else {
-        myBLDC2.getStateDirection(1, bldcIndex2);
+        myBLDC2.getStateDirection(0, bldcIndex2);
         // stateDirection[bldcIndex2] = 0;
         Serial.println("0");
     }
