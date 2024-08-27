@@ -19571,7 +19571,7 @@
               {
                 "disabled": false,
                 "nid": 318622987,
-                "strtype": "SWITCH/EventHandler",
+                "strtype": "_event/EventHandler",
                 "strval": "UNCHECKED(VALUE_CHANGED)",
                 "childs": [
                   {
@@ -29221,6 +29221,77 @@
                     "strtype": "BUTTON/Style_main",
                     "strval": "lv.PART.MAIN, Rectangle, Pad, Text ",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": -930959419,
+                    "strtype": "BUTTON/EventHandler",
+                    "strval": "CLICKED",
+                    "childs": [
+                      {
+                        "nid": 531172450,
+                        "strtype": "_event/name",
+                        "strval": "Event30",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 90145084,
+                        "strtype": "_event/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1762898813,
+                        "strtype": "_event/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 2108965923,
+                        "strtype": "_event/action",
+                        "strval": "MODIFY FLAG",
+                        "childs": [
+                          {
+                            "nid": 1781723062,
+                            "strtype": "MODIFY FLAG/Name",
+                            "strval": "MODIFY FLAG",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1642074147,
+                            "strtype": "MODIFY FLAG/Call",
+                            "strval": "ModifyFlag( <{Object}>, lv.obj.FLAG.<{Flag}>, \"<{Action}>\")",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1823724461,
+                            "strtype": "MODIFY FLAG/CallC",
+                            "strval": "_ui_flag_modify( <{Object}>, LV_OBJ_FLAG_<{Flag}>, _UI_MODIFY_FLAG_<{Action}>);",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1176846339,
+                            "strtype": "MODIFY FLAG/Object",
+                            "strval": "GUID70427703-1103805S2323179",
+                            "InheritedType": 9
+                          },
+                          {
+                            "nid": -219924364,
+                            "strtype": "MODIFY FLAG/Flag",
+                            "strval": "HIDDEN",
+                            "InheritedType": 3
+                          },
+                          {
+                            "nid": -1420620693,
+                            "strtype": "MODIFY FLAG/Action",
+                            "strval": "ADD",
+                            "InheritedType": 3
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "BUTTON"
@@ -45491,7 +45562,7 @@
               {
                 "nid": -1715046722,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -53115,7 +53186,7 @@
               {
                 "nid": 294842468,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -60745,7 +60816,7 @@
               {
                 "nid": -1947830782,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -88117,7 +88188,7 @@
                       {
                         "nid": -1197470674,
                         "strtype": "OBJECT/Hidden",
-                        "strval": "True",
+                        "strval": "False",
                         "InheritedType": 2
                       },
                       {
@@ -98171,9 +98242,9 @@
     "theme_dark": false,
     "theme_color1": 5,
     "theme_color2": 0,
-    "uiExportFolderPath": "C:\\Users\\kedai\\Documents\\ui_baru",
-    "projectExportFolderPath": "C:\\Users\\kedai\\Documents\\ui_baru",
-    "backup_cnt": 1154,
+    "uiExportFolderPath": "C:/Users/kedai/Documents/ui_bldc_new",
+    "projectExportFolderPath": "C:/Users/kedai/Documents/ui_bldc_new",
+    "backup_cnt": 1652,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

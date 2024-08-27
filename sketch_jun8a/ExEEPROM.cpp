@@ -5,9 +5,9 @@
 #define EEPROM_ADDR 0x50
 
 void ExEEPROM::init(){
-    Serial.begin(115200);
+  Serial.begin(115200);
   Wire.begin();
-  Serial.println("EEPROM Is Ready!");
+  Serial.println(F("EEPROM Is Ready!"));
 }
 
 int ExEEPROM::write(int addr, int val){
@@ -16,9 +16,9 @@ int ExEEPROM::write(int addr, int val){
     Wire.write((int)(addr >> 8));   // MSB
     Wire.write((int)(addr & 0xFF)); // LSB
     Wire.write(val);
-    int result = Wire.endTransmission();
+    Wire.endTransmission();
     delay(5); // Ensure EEPROM write cycle time
-    return result; 
+    return 1; 
 }
 
 int ExEEPROM::read(int addr){
@@ -33,7 +33,7 @@ int ExEEPROM::read(int addr){
     if (Wire.available()) {
         readData =  Wire.read();
     } else {
-        Serial.println("Error: No data available from EEPROM");
+        Serial.println(F("Error: No data available from EEPROM"));
     }
 
     return readData;

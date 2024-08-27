@@ -8,8 +8,8 @@ class AHT10 {
     public:
         // Constructor
         void init();
-        int read_temp(int val_temp);
-        int write_temp();
+        uint8_t read_temp(uint8_t val_temp);
+        uint8_t write_temp();
 
     private:
     
