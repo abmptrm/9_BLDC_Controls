@@ -35,10 +35,10 @@ int BMP::write_press(uint8_t addr) {
     sensors_event_t event;
     bmp180.getEvent(&event);
     if (event.pressure) {
-      int cs_press = (int)event.pressure / 100;
+      int cs_press = (int)event.pressure / 10;
       char my_press[20];
       sprintf(my_press, "%dhPa", cs_press);
-      Serial.println(my_press);
+      // Serial.println(my_press);
       
       if (ui_LabelPress != nullptr) {
         _ui_label_set_property(ui_LabelPress, _UI_LABEL_PROPERTY_TEXT, my_press);
@@ -50,10 +50,10 @@ int BMP::write_press(uint8_t addr) {
   }
 
   if (addr == 0x76) {
-    int cs_press = (int)bmp280.readPressure() / 100;
+    int cs_press = (int)bmp280.readPressure() / 1000;
     char my_press[20];
     sprintf(my_press, "%dhPa", cs_press);
-    Serial.println(my_press);
+    // Serial.println(my_press);
     
     if (ui_LabelPress2 != nullptr) {
       _ui_label_set_property(ui_LabelPress2, _UI_LABEL_PROPERTY_TEXT, my_press);

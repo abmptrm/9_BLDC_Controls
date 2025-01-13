@@ -1,6 +1,7 @@
 #include "eFirebase.h"
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
+#include <lvgl.h>
 
 // String pathToAllData = "/All Data/";
 // String pathToRealtimeData = "/Realtime Data/";
@@ -38,19 +39,7 @@ String getFormattedTime() {
   return String(formattedTime);
 }
 
-void eFirebase::begin(String WIFI_SSID, String WIFI_PASSWORD, String API_KEY, String DATABASE_URL){
-
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    Serial.print("Connecting to Wi-Fi");
-    while (WiFi.status() != WL_CONNECTED){
-        Serial.print(F("."));
-        delay(300);
-    }
-    
-    Serial.println();
-    Serial.print("Connected with IP: ");
-    Serial.println(WiFi.localIP());
-    Serial.println();
+void eFirebase::begin(String API_KEY, String DATABASE_URL){
 
     timeClient.begin();
     while (!timeClient.update()) {

@@ -2,6 +2,7 @@
 #include <lvgl.h>
 #include <TFT_eSPI.h>
 #include <ESP32Servo.h>
+#include <WiFi.h> 
 
 #include "ui.h"
 #include "ADDR.h"
@@ -21,10 +22,10 @@
 // #define USER_EMAIL "admin-bldc9@itera.ac.id" // admin user
 // #define USER_PASS "admin-bldc9-22-07-24" // admin pass
 
-ExEEPROM data;
 BMP s_press1, s_press2;
 AHT10 aht10;
 Encoder enc;
+ExEEPROM data;
 
 eFirebase fb;
 
@@ -125,29 +126,25 @@ void init_lcd()
 void sendData()
 {
   int getSpeed[] = {
-    map(data.read(ADDR_SPEED_1), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_2), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_3), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_4), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_5), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_6), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_7), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_8), 7, 65, 0, 100),
-    map(data.read(ADDR_SPEED_9), 7, 65, 0, 100),
+    map(data.read(ADDR_SPEED_1), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_2), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_3), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_4), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_5), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_6), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_7), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_8), 0, 180, 0, 100),
+    map(data.read(ADDR_SPEED_9), 0, 180, 0, 100),
   };
 
   int val_temp = aht10.write_temp();
   data.write(ADDR_TEMP, val_temp);
-
-  // int val_press1 = 1;
 
   int val_press1 = s_press1.write_press(0x77);
   data.write(ADDR_PRESS_B, val_press1);
 
   int val_press2 = s_press2.write_press(0x76);
   data.write(ADDR_PRESS_A, val_press2);
-
-  // int val_press2 = 1;
 
   int val_rpm = enc.rpm();
   data.write(ADDR_SPEED_FAN, val_rpm);
@@ -157,13 +154,89 @@ void sendData()
 
 ///////////////// SETUP FUNCTIONS //////////////////
 
+// void setup()
+// {
+//   Serial.begin(115200); /*serial init */
+  
+//   Wire.begin();
+
+//   ESP32PWM::allocateTimer(0);
+//   ESP32PWM::allocateTimer(1);
+//   ESP32PWM::allocateTimer(2);
+//   ESP32PWM::allocateTimer(3);
+
+//   BLDC.begin(bldc1, pin[0]);
+//   BLDC.begin(bldc2, pin[1]);
+//   BLDC.begin(bldc3, pin[2]);
+//   BLDC.begin(bldc4, pin[3]);
+//   BLDC.begin(bldc5, pin[4]);
+//   BLDC.begin(bldc6, pin[5]);
+//   BLDC.begin(bldc7, pin[6]);
+//   BLDC.begin(bldc8, pin[7]);
+//   BLDC.begin(bldc9, pin[8]);
+
+//   s_press1.init(0x77);
+//   s_press2.init(0x76);
+
+
+//   aht10.init();
+//   enc.begin(35, 34);
+
+
+//   data.init();
+//   Serial.println("cek error ===================");
+
+//   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);  
+
+//   if (WiFi.status() != WL_CONNECTED) {
+//       delay(500);
+//       Serial.print(".");
+//       lcd.fillScreen(TFT_BLACK); // Fill the screen with black
+  
+//       // Set text settings
+//       lcd.setTextColor(TFT_WHITE, TFT_BLACK); // Set text color to white and background to black
+//       lcd.setTextSize(2);        // Set the text size (2x larger than default)
+      
+//       // Position the text
+//       lcd.setCursor(50, 100);    // Adjust x (50) and y (100) positions as needed
+//       lcd.print("NOT_CONNECTED"); //
+//   } else {
+//     init_lcd();
+//     fb.begin(API_KEY, DATABASE_URL);
+//   }
+
+
+
+//   // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+//     // Serial.print("Connecting to Wi-Fi");
+//     // while (WiFi.status() != WL_CONNECTED){
+//     //     Serial.print(F("."));
+//     //     delay(300);
+//     // }
+    
+//   // Serial.println();
+//   // Serial.print("Connected with IP: ");
+//   // Serial.println(WiFi.localIP());
+//   // Serial.println();
+  
+//   // if(!fb.begin(WIFI_SSID, WIFI_PASSWORD, API_KEY, DATABASE_URL)){
+//   //   lv_obj_t *label_connecting = lv_label_create(lv_scr_act()); // Create a label
+//   //   lv_label_set_text(label_connecting, "CONNECTING...");        // Set label text
+//   //   lv_obj_align(label_connecting, LV_ALIGN_CENTER, 0, 0); 
+//   //   lv_task_handler();
+//   // }
+
+//   int read_temp = data.read(ADDR_TEMP);
+//   int read_press1 = data.read(ADDR_PRESS_B);
+//   int read_press2 = data.read(ADDR_PRESS_A);
+//   readSensor(read_temp, read_press1, read_press2);
+// }
+
 void setup()
 {
   Serial.begin(115200); /*serial init */
-  
   Wire.begin();
-
-  fb.begin(WIFI_SSID, WIFI_PASSWORD, API_KEY, DATABASE_URL);
 
   ESP32PWM::allocateTimer(0);
   ESP32PWM::allocateTimer(1);
@@ -180,26 +253,40 @@ void setup()
   BLDC.begin(bldc8, pin[7]);
   BLDC.begin(bldc9, pin[8]);
 
-  // BLDC.setOff(bldc1, 0);
-  data.init();
-  // bmp180_b.init();
-  // bmp280_a.init();
-
   s_press1.init(0x77);
   s_press2.init(0x76);
-
   aht10.init();
   enc.begin(35, 34);
-
-
+  data.init();
 
   init_lcd();
   
+  delay(100);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);  
+  int retryCount = 0;
+
+  while (WiFi.status() != WL_CONNECTED && retryCount < 20) {
+      delay(500);
+      Serial.print(".");
+      retryCount++;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    fb.begin(API_KEY, DATABASE_URL); // Initialize Firebase
+    Serial.println("\nConnected to Wi-Fi.");
+  } else {
+    Serial.println("\nFailed to connect to Wi-Fi.");
+    
+  }
+
+  // Initialize other sensors and components
   int read_temp = data.read(ADDR_TEMP);
   int read_press1 = data.read(ADDR_PRESS_B);
   int read_press2 = data.read(ADDR_PRESS_A);
   readSensor(read_temp, read_press1, read_press2);
 }
+
 
 ////////////////////// LOOP FUNCTIONS //////////////////
 
@@ -234,21 +321,22 @@ void loop()
   }
 
   if(run == false) {
-    bldc1.write(6);
-    bldc2.write(6);
-    bldc3.write(6);
-    bldc4.write(6);
-    bldc5.write(6);
-    bldc6.write(6);
-    bldc7.write(6);
-    bldc8.write(6);
-    bldc9.write(6);
+    bldc1.write(0);
+    bldc2.write(0);
+    bldc3.write(0);
+    bldc4.write(0);
+    bldc5.write(0);
+    bldc6.write(0);
+    bldc7.write(0);
+    bldc8.write(0);
+    bldc9.write(0);
     
   }
-  
-  // sendData();
+  if (WiFi.status() == WL_CONNECTED) {
+    sendData();
+  }
 
-  delay(5);
+  delay(1);
 }
 
 void ui_event_Button29(lv_event_t *e)

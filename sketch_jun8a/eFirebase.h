@@ -17,7 +17,7 @@ class eFirebase {
     private:
 
     public:
-    void begin(String WIFI_SSID, String WIFI_PASS, String API_KEY, String DATABASE_URL);
+    void begin(String API_KEY, String DATABASE_URL);
     void sendData(int bldc1, int bldc2, int bldc3, int bldc4, int bldc5, int bldc6, int bldc7, int bldc8, int bldc9, int temp, int press1, int press2, int rpm);    // void sendAllData(int bldc1, int bldc2, int bldc3, int bldc4, int bldc5, int bldc6, int bldc7, int bldc8, int bldc9, int temp, int press);
 
 
